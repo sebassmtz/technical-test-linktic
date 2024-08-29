@@ -9,11 +9,13 @@ namespace TechnicalTest.Application.Users.Create
     {
         private readonly IGenericRepository _genericRepository;
         private readonly IUnitOfWork _unitOfWork;
+        private readonly IAuthorization _authorization;
 
-        public CreateUserCommandHandler(IGenericRepository genericRepository, IUnitOfWork unitOfWork)
+        public CreateUserCommandHandler(IGenericRepository genericRepository, IUnitOfWork unitOfWork, IAuthorization authorization)
         {
             _genericRepository = genericRepository;
             _unitOfWork = unitOfWork;
+            _authorization = authorization;
         }
 
         public async Task<CreateUserCommandResponse> Handle(CreateUserCommand request, CancellationToken cancellationToken)
@@ -23,7 +25,9 @@ namespace TechnicalTest.Application.Users.Create
             {
                 throw new UserDomainException("User already exists");
             }
-            var createuser = User.Create(request.Name, request.Email, request.Password);
+
+            var encryptPassword = _authorization.EncryptPassword(request.Password);
+            var createuser = User.Create(request.Name, request.Email, encryptPassword);
             _genericRepository.Save<User>(createuser);
             await _unitOfWork.Commit();
             var userResponse = new CreateUserCommandResponse(createuser.Id, createuser.Name, createuser.Email);

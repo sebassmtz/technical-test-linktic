@@ -5,5 +5,6 @@ namespace TechnicalTest.Domain.Common.Ports
     public interface IAuthorization
     {
         string GenerateToken(User user);
+        string EncryptPassword(string password);
     }
 }

@@ -1,6 +1,11 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.IdentityModel.Tokens;
+using System.Runtime.InteropServices;
+using System.Text;
+using TechnicalTest.Domain.Common.Exceptions;
 using TechnicalTest.Domain.Common.Ports;
 using TechnicalTest.Infrastructure.Adapters.GenericRepositories;
 using TechnicalTest.Infrastructure.Adapters.GetConfiguration;
@@ -31,7 +36,29 @@ namespace TechnicalTest.Infrastructure.DependencyInjection
 
         public static void AddAuthentificationJWT(IServiceCollection services, IConfiguration configuration)
         {
+            var jwtSecret = configuration.GetValue<string>("Jwt:Key") ?? throw new ConfDomainException("Key not found");
 
+            services.AddAuthentication(cfg =>
+            {
+                cfg.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
+                cfg.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
+                cfg.DefaultScheme = JwtBearerDefaults.AuthenticationScheme;
+            }).AddJwtBearer(x =>
+            {
+                x.RequireHttpsMetadata = false;
+                x.SaveToken = false;
+                x.TokenValidationParameters = new TokenValidationParameters
+                {
+                    ValidateIssuerSigningKey = true,
+                    IssuerSigningKey = new SymmetricSecurityKey(
+                        Encoding.UTF8
+                        .GetBytes(jwtSecret)
+                    ),
+                    ValidateIssuer = false,
+                    ValidateAudience = false,
+                    ClockSkew = TimeSpan.Zero
+                };
+            });
         }
 
         public static void AddInjections(IServiceCollection services)

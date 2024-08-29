@@ -4,6 +4,7 @@ using TechnicalTest.Application.Users.Create;
 using TechnicalTest.Application.Users.Delete;
 using TechnicalTest.Application.Users.Get;
 using TechnicalTest.Application.Users.GetAll;
+using TechnicalTest.Application.Users.Login;
 using TechnicalTest.Application.Users.Update;
 
 namespace WebApp.Controllers
@@ -44,6 +45,15 @@ namespace WebApp.Controllers
         {
             var createUserCommandResponse = await _mediator.Send(createUserCommand);
             return CreatedAtAction(nameof(Post), createUserCommandResponse);
+        }
+
+        [Route("login")]
+        [HttpPost]
+        public async Task<IActionResult> Login([FromBody] LoginUserCommand loginCommand)
+        {
+            var dtoLogin = await _mediator.Send(loginCommand);
+            return Ok(dtoLogin);
+
         }
 
         // PUT api/<UserController>/5
