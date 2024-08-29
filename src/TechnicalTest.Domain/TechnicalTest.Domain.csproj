@@ -7,7 +7,6 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Folder Include="Common\Exceptions\" />
     <Folder Include="Services\" />
     <Folder Include="Reserves\" />
     <Folder Include="Users\" />
