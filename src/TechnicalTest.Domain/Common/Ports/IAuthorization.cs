@@ -1,7 +1,9 @@
-﻿namespace TechnicalTest.Domain.Common.Ports
+﻿using TechnicalTest.Domain.Users.Entities;
+
+namespace TechnicalTest.Domain.Common.Ports
 {
     public interface IAuthorization
     {
-        string GenerateToken(string token);
+        string GenerateToken(User user);
     }
 }

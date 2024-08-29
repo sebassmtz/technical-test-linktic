@@ -1,4 +1,5 @@
 ﻿using Microsoft.EntityFrameworkCore;
+using TechnicalTest.Domain.Users.Entities;
 
 namespace TechnicalTest.Infrastructure.EntityFramework.Contexts
 {
@@ -6,6 +7,7 @@ namespace TechnicalTest.Infrastructure.EntityFramework.Contexts
     {
 
         // Add DbSet for each entity
+        public DbSet<User> Users { get; set; }
 
         public ContextApp(DbContextOptions<ContextApp> options) : base(options)
         {

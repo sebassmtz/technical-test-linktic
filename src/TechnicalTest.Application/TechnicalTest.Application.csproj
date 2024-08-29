@@ -14,4 +14,8 @@
     <ProjectReference Include="..\TechnicalTest.Domain\TechnicalTest.Domain.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="Reserves\" />
+  </ItemGroup>
+
 </Project>

@@ -5,6 +5,7 @@ using TechnicalTest.Domain.Common.Ports;
 using TechnicalTest.Infrastructure.Adapters.GenericRepositories;
 using TechnicalTest.Infrastructure.Adapters.GetConfiguration;
 using TechnicalTest.Infrastructure.Adapters.UnitOfWork;
+using TechnicalTest.Infrastructure.Authentification;
 using TechnicalTest.Infrastructure.EntityFramework.Contexts;
 
 
@@ -16,6 +17,7 @@ namespace TechnicalTest.Infrastructure.DependencyInjection
         {
             AddPersistence(services, configuration);
             AddInjections(services);
+            AddAuthentificationJWT(services, configuration);
             return services;
         }
 
@@ -34,6 +36,7 @@ namespace TechnicalTest.Infrastructure.DependencyInjection
 
         public static void AddInjections(IServiceCollection services)
         {
+            services.AddScoped<IAuthorization, AuthenticationProvider>();
             services.AddScoped<IGenericRepository, GenericRepository>();
             services.AddScoped<IUnitOfWork, UnitOfWork>();
             services.AddScoped<IGetConfiguration, GetConfiguration>();

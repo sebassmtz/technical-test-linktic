@@ -4,6 +4,7 @@
     <TargetFramework>net8.0</TargetFramework>
     <Nullable>enable</Nullable>
     <ImplicitUsings>enable</ImplicitUsings>
+    <UserSecretsId>f3e64a11-cb63-4546-80aa-a722701a871a</UserSecretsId>
   </PropertyGroup>
 
   <ItemGroup>
@@ -17,11 +18,6 @@
   <ItemGroup>
     <ProjectReference Include="..\TechnicalTest.Application\TechnicalTest.Application.csproj" />
     <ProjectReference Include="..\TechnicalTest.Infrastructure\TechnicalTest.Infrastructure.csproj" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <Folder Include="Controllers\" />
-    <Folder Include="Middleware\" />
   </ItemGroup>
 
 </Project>
