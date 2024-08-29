@@ -1,4 +1,6 @@
 ﻿using MediatR;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using TechnicalTest.Application.Users.Create;
 using TechnicalTest.Application.Users.Delete;
@@ -23,6 +25,7 @@ namespace WebApp.Controllers
 
         // GET: api/<UserController>
         [HttpGet]
+        [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
         public async Task<IActionResult> Get()
         {
             var listQuery = new GetAllUserQuery();
